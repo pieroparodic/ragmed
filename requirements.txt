@@ -1,8 +1,19 @@
 # Core dependencies for PubMed RAG v2
+
+# PubMed / NCBI API
 biopython>=1.81
+
+# Environment variables
 python-dotenv>=1.0.0
+
+# Embeddings & Machine Learning
 sentence-transformers>=2.2.2
 scikit-learn>=1.3.0
+
+# Web Framework & Server
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.0.0
 
 # Additional dependencies (installed automatically with above packages)
 # - torch (required by sentence-transformers)
