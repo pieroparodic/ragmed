@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PubMed RAG v2</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #0f1117;
+      color: #e0e0e0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 48px 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+      font-size: 0.9rem;
+      color: #666;
+      margin-bottom: 40px;
+    }
+
+    /* ---- Search box ---- */
+    .search-box {
+      width: 100%;
+      max-width: 740px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type="text"] {
+      flex: 1;
+      padding: 15px 20px;
+      border-radius: 12px;
+      border: 1px solid #2a2d3a;
+      background: #1a1d2e;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+
+    input[type="text"]:focus {
+      border-color: #4f8ef7;
+      box-shadow: 0 0 0 3px rgba(79,142,247,0.15);
+    }
+
+    button#searchBtn {
+      padding: 15px 26px;
+      border-radius: 12px;
+      border: none;
+      background: #4f8ef7;
+      color: #fff;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+      white-space: nowrap;
+    }
+
+    button#searchBtn:hover  { background: #3a78e0; }
+    button#searchBtn:active { transform: scale(0.97); }
+    button#searchBtn:disabled { background: #2a2d3a; cursor: not-allowed; }
+
+    /* ---- Options ---- */
+    .options-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: flex-end;
+    }
+
+    .option-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    .option-group label {
+      font-size: 0.72rem;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .option-group select,
+    .option-group input[type="number"] {
+      padding: 8px 12px;
+      border-radius: 8px;
+      border: 1px solid #2a2d3a;
+      background: #1a1d2e;
+      color: #fff;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border 0.2s;
+    }
+
+    .option-group select:focus,
+    .option-group input[type="number"]:focus {
+      border-color: #4f8ef7;
+    }
+
+    /* ---- Status ---- */
+    #status {
+      margin-top: 24px;
+      font-size: 0.88rem;
+      color: #666;
+      min-height: 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .spinner {
+      width: 15px; height: 15px;
+      border: 2px solid #333;
+      border-top-color: #4f8ef7;
+      border-radius: 50%;
+      animation: spin 0.65s linear infinite;
+      flex-shrink: 0;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ---- Results ---- */
+    #results {
+      width: 100%;
+      max-width: 740px;
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .card {
+      background: #1a1d2e;
+      border: 1px solid #242738;
+      border-radius: 14px;
+      padding: 22px 26px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      border-color: #4f8ef7;
+      box-shadow: 0 4px 24px rgba(79,142,247,0.08);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 14px;
+      margin-bottom: 8px;
+    }
+
+    .card-num {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #4f8ef7;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+    }
+
+    .card-title {
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: #f0f0f0;
+      line-height: 1.45;
+    }
+
+    .score-badge {
+      background: #1b2a47;
+      color: #4f8ef7;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+
+    .recent-badge {
+      background: #1a3326;
+      color: #4ecb8a;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+
+    .score-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      align-items: flex-end;
+    }
+
+    .card-meta {
+      font-size: 0.78rem;
+      color: #555;
+      margin-bottom: 10px;
+    }
+
+    /* Abstract with expand/collapse */
+    .abstract-wrapper {
+      position: relative;
+    }
+
+    .card-abstract {
+      font-size: 0.87rem;
+      color: #a0a0b0;
+      line-height: 1.65;
+      max-height: 90px;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .card-abstract.expanded {
+      max-height: 3000px;
+    }
+
+    .fade-overlay {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 44px;
+      background: linear-gradient(transparent, #1a1d2e);
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .card-abstract.expanded + .fade-overlay {
+      opacity: 0;
+    }
+
+    .expand-btn {
+      background: none;
+      border: none;
+      color: #4f8ef7;
+      font-size: 0.78rem;
+      cursor: pointer;
+      padding: 6px 0 0;
+      display: block;
+      transition: color 0.2s;
+    }
+
+    .expand-btn:hover { color: #7aacff; }
+
+    .card-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .card-links a {
+      font-size: 0.78rem;
+      color: #4f8ef7;
+      text-decoration: none;
+      padding: 5px 12px;
+      border: 1px solid #1e2f50;
+      border-radius: 8px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+
+    .card-links a:hover {
+      background: #1b2a47;
+      border-color: #4f8ef7;
+    }
+
+    /* ---- Empty / error states ---- */
+    .msg-box {
+      text-align: center;
+      padding: 48px 0;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .msg-box.error { color: #e07070; }
+  </style>
+</head>
+<body>
+
+  <h1>🔬 PubMed RAG v2</h1>
+  <p class="subtitle">Semantic search across medical literature &nbsp;·&nbsp; Retrieval + Re-ranking</p>
+
+  <div class="search-box">
+    <div class="input-row">
+      <input
+        type="text"
+        id="queryInput"
+        placeholder="e.g. heart failure SGLT2 hospitalization mortality"
+        autofocus
+      />
+      <button id="searchBtn" onclick="doSearch()">🔍 Search</button>
+    </div>
+
+    <div class="options-row">
+      <div class="option-group">
+        <label>Domain filter</label>
+        <select id="domain">
+          <option value="">All of PubMed</option>
+          <option value="cardiology">Cardiology</option>
+          <option value="oncology">Oncology</option>
+          <option value="neurology">Neurology</option>
+          <option value="infectious diseases">Infectious Diseases</option>
+          <option value="endocrinology">Endocrinology</option>
+          <option value="pulmonology">Pulmonology</option>
+          <option value="gastroenterology">Gastroenterology</option>
+          <option value="nephrology">Nephrology</option>
+          <option value="psychiatry">Psychiatry</option>
+          <option value="rheumatology">Rheumatology</option>
+        </select>
+      </div>
+      <div class="option-group">
+        <label>PubMed candidates</label>
+        <input type="number" id="retmax" value="20" min="5" max="100" style="width:82px"/>
+      </div>
+      <div class="option-group">
+        <label>Top results</label>
+        <input type="number" id="topk" value="5" min="1" max="20" style="width:72px"/>
+      </div>
+    </div>
+  </div>
+
+  <div id="status"></div>
+  <div id="results"></div>
+
+  <script>
+    // Press Enter to search
+    document.getElementById('queryInput')
+      .addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
+    async function doSearch() {
+      const question = document.getElementById('queryInput').value.trim();
+      if (!question) return;
+
+      const btn     = document.getElementById('searchBtn');
+      const status  = document.getElementById('status');
+      const results = document.getElementById('results');
+
+      btn.disabled = true;
+      status.innerHTML = '<div class="spinner"></div> Querying PubMed and re-ranking results...';
+      results.innerHTML = '';
+
+      const payload = {
+        question,
+        domain:  document.getElementById('domain').value,
+        retmax:  parseInt(document.getElementById('retmax').value),
+        top_k:   parseInt(document.getElementById('topk').value),
+      };
+
+      try {
+        const t0  = Date.now();
+        const res = await fetch('/query', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify(payload),
+        });
+
+        if (res.status === 503) {
+          throw new Error('The model is still loading. Please wait a few seconds and try again.');
+        }
+        if (!res.ok) {
+          const err = await res.text();
+          throw new Error(`Server error ${res.status}: ${err}`);
+        }
+
+        const data    = await res.json();
+        const elapsed = ((Date.now() - t0) / 1000).toFixed(1);
+
+        status.textContent =
+          `${data.n_candidates} candidates found · ` +
+          `Top ${data.results.length} shown · ${elapsed}s`;
+
+        renderResults(data.results);
+
+      } catch (err) {
+        status.innerHTML = '';
+        results.innerHTML = `<div class="msg-box error">❌ ${esc(err.message)}</div>`;
+      } finally {
+        btn.disabled = false;
+      }
+    }
+
+    function renderResults(articles) {
+      const container = document.getElementById('results');
+
+      if (!articles.length) {
+        container.innerHTML =
+          '<div class="msg-box">No articles with abstract found for this query.</div>';
+        return;
+      }
+
+      const currentYear = new Date().getFullYear();
+
+      articles.forEach((a, i) => {
+        // Use combined_score when available, fall back to semantic_score
+        const displayScore = (a.combined_score ?? a.semantic_score ?? 0);
+        const scoreLabel   = (displayScore * 100).toFixed(1);
+        const semLabel     = (a.semantic_score * 100).toFixed(1);
+
+        const meta  = [a.journal, a.year].filter(Boolean).join(' · ');
+        const doi   = a.doi
+          ? `<a href="https://doi.org/${esc(a.doi)}" target="_blank">📄 DOI</a>`
+          : '';
+
+        // Show a "Recent" badge for articles published within the last 5 years
+        const pubYear   = parseInt(a.year) || 0;
+        const isRecent  = pubYear > 0 && (currentYear - pubYear) < 5;
+        const recentBadge = isRecent
+          ? `<div class="recent-badge" title="Published within the last 5 years">🕐 Recent</div>`
+          : '';
+
+        const scoreTip = a.combined_score != null
+          ? `title="Combined score: semantic (${semLabel}%) + recency boost"`
+          : '';
+
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <div class="card-num">Result #${i + 1}</div>
+          <div class="card-header">
+            <div class="card-title">${esc(a.title)}</div>
+            <div class="score-group">
+              <div class="score-badge" ${scoreTip}>${scoreLabel}% score</div>
+              ${recentBadge}
+            </div>
+          </div>
+          ${meta ? `<div class="card-meta">${esc(meta)}</div>` : ''}
+          <div class="abstract-wrapper">
+            <div class="card-abstract" id="abs-${i}">${esc(a.abstract)}</div>
+            <div class="fade-overlay" id="fade-${i}"></div>
+          </div>
+          <button class="expand-btn" id="ebtn-${i}" onclick="toggleAbstract(${i})">
+            ▼ Show full abstract
+          </button>
+          <div class="card-links">
+            <a href="${esc(a.pubmed_url)}" target="_blank">🔗 PubMed</a>
+            ${doi}
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function toggleAbstract(i) {
+      const el   = document.getElementById(`abs-${i}`);
+      const btn  = document.getElementById(`ebtn-${i}`);
+      const fade = document.getElementById(`fade-${i}`);
+      const open = el.classList.toggle('expanded');
+      btn.textContent    = open ? '▲ Hide abstract' : '▼ Show full abstract';
+      fade.style.display = open ? 'none' : '';
+    }
+
+    // Safely escape HTML special characters
+    function esc(str) {
+      return String(str ?? '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+</body>
+</html>
+
