@@ -24,7 +24,7 @@ if api_key:
     Entrez.api_key = api_key
 
 # Lightweight, widely-used model for semantic embeddings
-DEFAULT_EMBED_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
+DEFAULT_EMBED_MODEL = "neuml/pubmedbert-base-embeddings"
 
 # Domain filters: each value is a PubMed query clause (MeSH + free-text).
 # An empty string means no domain restriction — search across all of PubMed.
@@ -102,10 +102,19 @@ def clean_text(text: str) -> str:
     return re.sub(r"\s+", " ", str(text)).strip()
 
 
-def build_pubmed_query(user_question: str, domain: str = "") -> str:
+# Publication type filter: restricts results to high-evidence study designs.
+# This significantly reduces noise from case reports, editorials, and basic science papers.
+PUB_TYPE_FILTER = (
+    '("systematic review"[pt] OR "meta-analysis"[pt] '
+    'OR "randomized controlled trial"[pt] OR "clinical trial"[pt])'
+)
+
+
+def build_pubmed_query(user_question: str, domain: str = "", filter_pub_types: bool = True) -> str:
     """
     Build the PubMed query by combining:
     - an optional domain filter (MeSH + Title/Abstract terms)
+    - an optional publication type filter (systematic reviews, RCTs, meta-analyses)
     - the user's free-text question
 
     Tip: write the question in English for best PubMed recall.
@@ -114,9 +123,14 @@ def build_pubmed_query(user_question: str, domain: str = "") -> str:
     domain_clause = DOMAIN_FILTERS.get(domain, "")
     question_clause = f"({user_question})"
 
+    parts = []
     if domain_clause:
-        return f"{domain_clause} AND {question_clause}"
-    return question_clause
+        parts.append(domain_clause)
+    if filter_pub_types:
+        parts.append(PUB_TYPE_FILTER)
+    parts.append(question_clause)
+
+    return " AND ".join(parts)
 
 
 # =========================================================
@@ -333,7 +347,13 @@ class SemanticReranker:
         # Linear decay: age=0 → 1.0, age=RECENCY_WINDOW_YEARS-1 → ~0.2
         return 1.0 - (age / RECENCY_WINDOW_YEARS)
 
-    def rerank(self, query: str, articles: List[Dict], top_k: int = 3) -> List[Dict]:
+    def rerank(
+        self,
+        query: str,
+        articles: List[Dict],
+        top_k: int = 3,
+        min_semantic_threshold: float = 0.25,
+    ) -> List[Dict]:
         if not articles:
             return []
 
@@ -350,6 +370,9 @@ class SemanticReranker:
         # Combine semantic score with recency bonus
         scored = []
         for article, sem_score in zip(articles, sims):
+            # Drop articles whose semantic similarity is below the threshold
+            if float(sem_score) < min_semantic_threshold:
+                continue
             item = dict(article)
             recency = self._recency_bonus(article.get("year", ""))
             combined = (
@@ -372,8 +395,9 @@ class SemanticReranker:
 def answer_with_pubmed_rag_v2(
     user_question: str,
     domain: str = "",
-    pubmed_retmax: int = 20,
+    pubmed_retmax: int = 50,
     final_k: int = 3,
+    filter_pub_types: bool = True,
     reranker: Optional[SemanticReranker] = None,
 ) -> Dict:
     """
@@ -390,9 +414,15 @@ def answer_with_pubmed_rag_v2(
     if reranker is None:
         reranker = SemanticReranker()
 
-    pubmed_query = build_pubmed_query(user_question, domain=domain)
+    pubmed_query = build_pubmed_query(user_question, domain=domain, filter_pub_types=filter_pub_types)
 
     pmids = search_pubmed_pmids(pubmed_query, retmax=pubmed_retmax)
+
+    # Fallback: if the publication type filter returns nothing, retry without it
+    if not pmids and filter_pub_types:
+        pubmed_query = build_pubmed_query(user_question, domain=domain, filter_pub_types=False)
+        pmids = search_pubmed_pmids(pubmed_query, retmax=pubmed_retmax)
+
     if not pmids:
         return {
             "query_user": user_question,

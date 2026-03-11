@@ -1,0 +1,391 @@
+{
+  "evaluation_date": "2026-03-10 23:35",
+  "model_judge": "gemini-2.5-flash",
+  "n_queries": 10,
+  "top_k_per_query": 3,
+  "total_articles_evaluated": 21,
+  "overall_mean_relevance": 4.24,
+  "pct_relevant_3_plus": 95.2,
+  "pct_highly_relevant_4_plus": 81.0,
+  "domain_accuracy_pct": 100.0,
+  "score_distribution": {
+    "5": 10,
+    "4": 7,
+    "3": 3,
+    "2": 1,
+    "1": 0
+  },
+  "per_query_results": [
+    {
+      "question": "What are the most effective treatments for heart failure with reduced ejection fraction?",
+      "domain": "cardiology",
+      "pubmed_query": "(\"Cardiovascular Diseases\"[MeSH Terms] OR cardiology[Title/Abstract] OR heart[Title/Abstract] OR cardiac[Title/Abstract]) AND (\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (What are the most effective treatments for heart failure with reduced ejection fraction?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "40892608",
+          "title": "Pharmacologic Treatment of Heart Failure With Reduced Ejection Fraction: An Updated Systematic Review and Network Meta-Analysis.",
+          "journal": "Journal of the American College of Cardiology",
+          "year": "2025",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40892608/",
+          "semantic_score": 0.541713535785675,
+          "recency_bonus": 0.8,
+          "combined_score": 0.5805,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "The article is a systematic review and network meta-analysis directly comparing the effectiveness of pharmacologic treatments for heart failure with reduced ejection fraction, making it perfectly relevant to the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "34895860",
+          "title": "A Systematic Review and Network Meta-Analysis of Pharmacological Treatment of Heart Failure With Reduced Ejection Fraction.",
+          "journal": "JACC. Heart failure",
+          "year": "2022",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/34895860/",
+          "semantic_score": 0.5936047434806824,
+          "recency_bonus": 0.2,
+          "combined_score": 0.5346,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "The article is a systematic review and network meta-analysis directly comparing the effectiveness of various pharmacological treatments for heart failure with reduced ejection fraction, which perfectly aligns with the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "38184132",
+          "title": "Beta-blocker therapy in heart failure with preserved ejection fraction (B-HFpEF): A systematic review and meta-analysis.",
+          "journal": "Current problems in cardiology",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38184132/",
+          "semantic_score": 0.5055121183395386,
+          "recency_bonus": 0.6,
+          "combined_score": 0.5197,
+          "gemini_relevance_score": 2,
+          "gemini_reason": "The article focuses on heart failure with *preserved* ejection fraction (HFpEF), whereas the clinical question specifically asks about treatments for heart failure with *reduced* ejection fraction (HFrEF), making it only broadly related by topic but not directly applicable.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 4.0
+    },
+    {
+      "question": "What is the role of statins in preventing cardiovascular events?",
+      "domain": "cardiology",
+      "n_candidates": 0,
+      "articles": [],
+      "mean_relevance": null
+    },
+    {
+      "question": "How effective is immunotherapy for non-small cell lung cancer?",
+      "domain": "oncology",
+      "pubmed_query": "(\"Neoplasms\"[MeSH Terms] OR cancer[Title/Abstract] OR tumor[Title/Abstract] OR oncology[Title/Abstract]) AND (\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (How effective is immunotherapy for non-small cell lung cancer?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "38625698",
+          "title": "Neoadjuvant Chemo-Immunotherapy for Early-Stage Non-Small Cell Lung Cancer: A Systematic Review and Meta-Analysis.",
+          "journal": "JAMA network open",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38625698/",
+          "semantic_score": 0.5924669504165649,
+          "recency_bonus": 0.6,
+          "combined_score": 0.5936,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article directly addresses the effectiveness of immunotherapy for non-small cell lung cancer, specifically focusing on neoadjuvant chemo-immunotherapy in early-stage disease, which is a key component of the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "37596898",
+          "title": "Efficacy and safety of immune checkpoint inhibitors for advanced non-small cell lung cancer with or without PD-L1 selection: A systematic review and network meta-analysis.",
+          "journal": "Chinese medical journal",
+          "year": "2023",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/37596898/",
+          "semantic_score": 0.6130509376525879,
+          "recency_bonus": 0.4,
+          "combined_score": 0.5811,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "The article is a systematic review and network meta-analysis directly assessing the 'efficacy and safety' (how effective) of 'immune checkpoint inhibitors' (immunotherapy) for 'advanced non-small cell lung cancer,' addressing all components of the clinical question with high-level evidence.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "38512301",
+          "title": "Neoadjuvant Chemoimmunotherapy for NSCLC: A Systematic Review and Meta-Analysis.",
+          "journal": "JAMA oncology",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38512301/",
+          "semantic_score": 0.5741105079650879,
+          "recency_bonus": 0.6,
+          "combined_score": 0.578,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article is highly relevant as it directly evaluates the efficacy of a specific immunotherapy-based regimen (chemoimmunotherapy) for NSCLC, albeit in the neoadjuvant setting and excluding immunotherapy monotherapy.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 4.33
+    },
+    {
+      "question": "What are the side effects of chemotherapy in breast cancer patients?",
+      "domain": "oncology",
+      "pubmed_query": "(\"Neoplasms\"[MeSH Terms] OR cancer[Title/Abstract] OR tumor[Title/Abstract] OR oncology[Title/Abstract]) AND (\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (What are the side effects of chemotherapy in breast cancer patients?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "39394646",
+          "title": "Symptom Clusters in Breast Cancer Patients Receiving Adjuvant Chemotherapy: A Systematic Review.",
+          "journal": "Journal of clinical nursing",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39394646/",
+          "semantic_score": 0.4480733871459961,
+          "recency_bonus": 0.6,
+          "combined_score": 0.4709,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "This systematic review directly addresses the common adverse symptoms and symptom clusters, which are synonymous with side effects, experienced by breast cancer patients undergoing adjuvant chemotherapy, providing strong evidence for the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "39842054",
+          "title": "A randomized controlled trial: Effects of compression therapy combined with exercise on chemotherapy-induced peripheral neuropathy in patients with breast cancer.",
+          "journal": "Cancer treatment and research communications",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39842054/",
+          "semantic_score": 0.4040314853191376,
+          "recency_bonus": 0.6,
+          "combined_score": 0.4334,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article is highly relevant as it directly investigates chemotherapy-induced peripheral neuropathy, a specific side effect, in breast cancer patients, thus addressing a component of the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "38864297",
+          "title": "Sacituzumab govitecan vs. chemotherapy for metastatic breast cancer: a meta-analysis on safety outcomes.",
+          "journal": "Future oncology (London, England)",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38864297/",
+          "semantic_score": 0.4008783996105194,
+          "recency_bonus": 0.6,
+          "combined_score": 0.4307,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article directly addresses the side effects (safety outcomes) of chemotherapy in breast cancer patients, as it compares Sacituzumab govitecan to chemotherapy and thus provides data on chemotherapy's safety profile in this population.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 4.33
+    },
+    {
+      "question": "What lifestyle interventions are most effective for type 2 diabetes prevention?",
+      "domain": "endocrinology",
+      "pubmed_query": "(\"Endocrine System Diseases\"[MeSH Terms] OR diabetes[Title/Abstract] OR endocrine[Title/Abstract] OR hormone[Title/Abstract]) AND (\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (What lifestyle interventions are most effective for type 2 diabetes prevention?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "39879607",
+          "title": "Effectiveness of Different Intervention Modes in Lifestyle Intervention for the Prevention of Type 2 Diabetes and the Reversion to Normoglycemia in Adults With Prediabetes: Systematic Review and Meta-Analysis of Randomized Controlled Trials.",
+          "journal": "Journal of medical Internet research",
+          "year": "2025",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39879607/",
+          "semantic_score": 0.47724616527557373,
+          "recency_bonus": 0.8,
+          "combined_score": 0.5257,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "This systematic review and meta-analysis directly investigates the effectiveness of different modes of lifestyle interventions for type 2 diabetes prevention in adults with prediabetes, perfectly matching all aspects of the clinical question with strong evidence.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "39222689",
+          "title": "Efficacy of lifestyle weight loss interventions on regression to normoglycemia and progression to type 2 diabetes in individuals with prediabetes: a systematic review and pairwise and dose-response meta-analyses.",
+          "journal": "The American journal of clinical nutrition",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39222689/",
+          "semantic_score": 0.49850672483444214,
+          "recency_bonus": 0.6,
+          "combined_score": 0.5137,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "This systematic review and meta-analysis directly addresses the efficacy and dose-dependent impacts of lifestyle weight loss interventions on preventing progression to type 2 diabetes in individuals with prediabetes, providing strong evidence directly relevant to the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "39305340",
+          "title": "A whole-food, plant-based intensive lifestyle intervention improves glycaemic control and reduces medications in individuals with type 2 diabetes: a randomised controlled trial.",
+          "journal": "Diabetologia",
+          "year": "2025",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39305340/",
+          "semantic_score": 0.4490370452404022,
+          "recency_bonus": 0.8,
+          "combined_score": 0.5017,
+          "gemini_relevance_score": 3,
+          "gemini_reason": "The article investigates lifestyle interventions for improving outcomes in individuals already diagnosed with type 2 diabetes, rather than preventing its onset as asked by the clinical question.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 4.33
+    },
+    {
+      "question": "What are the current pharmacological treatments for Alzheimer's disease?",
+      "domain": "neurology",
+      "pubmed_query": "(\"Nervous System Diseases\"[MeSH Terms] OR neurology[Title/Abstract] OR neurological[Title/Abstract] OR brain[Title/Abstract]) AND (\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (What are the current pharmacological treatments for Alzheimer's disease?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "38640313",
+          "title": "Evaluating the efficacy and safety of Alzheimer's disease drugs: A meta-analysis and systematic review.",
+          "journal": "Medicine",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38640313/",
+          "semantic_score": 0.5405171513557434,
+          "recency_bonus": 0.6,
+          "combined_score": 0.5494,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "The article is a systematic review and meta-analysis directly evaluating the efficacy and safety of current pharmacological treatments, including cholinesterase inhibitors, memantine, and sodium oligomannate, for Alzheimer's disease, precisely addressing the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "38439609",
+          "title": "Safety and efficacy of acetylcholinesterase inhibitors for Alzheimer's disease: A systematic review and meta-analysis.",
+          "journal": "Advances in clinical and experimental medicine : official organ Wroclaw Medical University",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/38439609/",
+          "semantic_score": 0.4501969516277313,
+          "recency_bonus": 0.6,
+          "combined_score": 0.4727,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "This systematic review and meta-analysis directly addresses a major category of current pharmacological treatments for Alzheimer's disease, evaluating their safety and efficacy with strong evidence, which is exactly what the clinical question seeks.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "22397651",
+          "title": "Donepezil and memantine for moderate-to-severe Alzheimer's disease.",
+          "journal": "The New England journal of medicine",
+          "year": "2012",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/22397651/",
+          "semantic_score": 0.5053077936172485,
+          "recency_bonus": 0.0,
+          "combined_score": 0.4295,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "The article directly investigates the efficacy and use of donepezil and memantine, which are specific current pharmacological treatments for Alzheimer's disease.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 5.0
+    },
+    {
+      "question": "What antibiotics are recommended for community-acquired pneumonia?",
+      "domain": "infectious diseases",
+      "pubmed_query": "(\"Communicable Diseases\"[MeSH Terms] OR infection[Title/Abstract] OR infectious[Title/Abstract] OR antimicrobial[Title/Abstract]) AND (\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (What antibiotics are recommended for community-acquired pneumonia?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "40202602",
+          "title": "Antimicrobial stewardship interventions in hospitalized adults with community-acquired pneumonia: a systematic review and meta-analysis.",
+          "journal": "European journal of clinical microbiology & infectious diseases : official publication of the European Society of Clinical Microbiology",
+          "year": "2025",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/40202602/",
+          "semantic_score": 0.5729518532752991,
+          "recency_bonus": 0.8,
+          "combined_score": 0.607,
+          "gemini_relevance_score": 3,
+          "gemini_reason": "The article evaluates the effectiveness of antimicrobial stewardship programs in promoting adherence to recommended antibiotic regimens for CAP, but it does not directly list or specify what those recommended antibiotics are.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "29790844",
+          "title": "Antibiotic use for community-acquired pneumonia in neonates and children: WHO evidence review.",
+          "journal": "Paediatrics and international child health",
+          "year": "2018",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/29790844/",
+          "semantic_score": 0.6965593695640564,
+          "recency_bonus": 0.0,
+          "combined_score": 0.5921,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article directly addresses antibiotic recommendations for community-acquired pneumonia, but specifically focuses on neonates and children, which is a subset of the general population typically implied by the clinical question.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "39427174",
+          "title": "Treatment of mild to moderate community-acquired pneumonia in previously healthy children: an Italian intersociety consensus (SIPPS-SIP-SITIP-FIMP-SIAIP-SIMRI-FIMMG-SIMG).",
+          "journal": "Italian journal of pediatrics",
+          "year": "2024",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/39427174/",
+          "semantic_score": 0.5862283706665039,
+          "recency_bonus": 0.6,
+          "combined_score": 0.5883,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article directly addresses antibiotic recommendations for community-acquired pneumonia, but it is specifically focused on previously healthy children with mild to moderate disease, which is a narrower scope than the general clinical question.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 3.67
+    },
+    {
+      "question": "What is the evidence for intermittent fasting in weight loss?",
+      "domain": "all PubMed",
+      "n_candidates": 0,
+      "articles": [],
+      "mean_relevance": null
+    },
+    {
+      "question": "What are the long-term effects of sleep deprivation on health?",
+      "domain": "all PubMed",
+      "pubmed_query": "(\"systematic review\"[pt] OR \"meta-analysis\"[pt] OR \"randomized controlled trial\"[pt] OR \"clinical trial\"[pt]) AND (What are the long-term effects of sleep deprivation on health?)",
+      "n_candidates": 20,
+      "articles": [
+        {
+          "rank": 1,
+          "pmid": "20469800",
+          "title": "Sleep duration and all-cause mortality: a systematic review and meta-analysis of prospective studies.",
+          "journal": "Sleep",
+          "year": "2010",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/20469800/",
+          "semantic_score": 0.515303373336792,
+          "recency_bonus": 0.0,
+          "combined_score": 0.438,
+          "gemini_relevance_score": 5,
+          "gemini_reason": "This systematic review and meta-analysis directly addresses the long-term effects of short sleep duration (sleep deprivation) on a critical health outcome (all-cause mortality) using strong longitudinal evidence.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 2,
+          "pmid": "10543671",
+          "title": "Impact of sleep debt on metabolic and endocrine function.",
+          "journal": "Lancet (London, England)",
+          "year": "1999",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/10543671/",
+          "semantic_score": 0.5132945775985718,
+          "recency_bonus": 0.0,
+          "combined_score": 0.4363,
+          "gemini_relevance_score": 4,
+          "gemini_reason": "The article is highly relevant as it directly investigates the impact of sleep debt on metabolic and endocrine functions, identifying changes that are interpreted as similar to normal aging and potentially increasing the severity of age-related health issues, thereby providing strong mechanistic insights into potential long-term effects on health.",
+          "domain_keyword_match": true
+        },
+        {
+          "rank": 3,
+          "pmid": "36472094",
+          "title": "How much does sleep deprivation impair endurance performance? A systematic review and meta-analysis.",
+          "journal": "European journal of sport science",
+          "year": "2023",
+          "pubmed_url": "https://pubmed.ncbi.nlm.nih.gov/36472094/",
+          "semantic_score": 0.4276357889175415,
+          "recency_bonus": 0.4,
+          "combined_score": 0.4235,
+          "gemini_relevance_score": 3,
+          "gemini_reason": "The article is moderately relevant as it addresses the effect of sleep deprivation on a specific health outcome (endurance performance), but it does not specify long-term effects nor cover the broad scope of 'health' implied by the clinical question.",
+          "domain_keyword_match": true
+        }
+      ],
+      "mean_relevance": 4.0
+    }
+  ]
+}
